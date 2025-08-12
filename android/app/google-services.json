@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "667686417573",
+    "project_id": "lunew-e6b1b",
+    "storage_bucket": "lunew-e6b1b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667686417573:android:eb7d647590c5376afe894c",
+        "android_client_info": {
+          "package_name": "com.example.lu_new"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1WdoSeUx2yI5RBVa10SiYjWwntKduzKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
