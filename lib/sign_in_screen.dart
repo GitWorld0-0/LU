@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lu_new/user.dart';
 import 'register.dart';
+import '/pass/forgetpassword.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignInScreen extends StatefulWidget {//stateful widget used for dynamic purposes
+  const SignInScreen({super.key});//key → tells Flutter "this widget is the same as before, just update it". super.key → passes the key to the parent (StatefulWidget) so Flutter can track it. It’s not mandatory, but highly recommended for good performance.
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();//creating state object under signinscreen
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();//_formKey is a unique key for your Form widget.GlobalKey<FormState> lets you validate the form fields or access form state from anywhere in the widget.
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  Future<void> _signIn() async {
+  Future<void> _signIn() async {//A Future is a way to handle values that will be available later
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
@@ -29,7 +30,7 @@ class _SignInScreenState extends State<SignInScreen> {
         // Navigate to user screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const UserScreen()),
+          MaterialPageRoute(builder: (context) => UserScreen()),
         );
       } on FirebaseAuthException catch (e) {
         String message = 'Login failed';
@@ -52,43 +53,43 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          decoration: const BoxDecoration(
+  Widget build(BuildContext context) {//defines the UI of the screen.
+    return GestureDetector(//hides keyboard on tap outside.
+      onTap: () => FocusScope.of(context).unfocus(),//dismiss the keyboard when tapping anywhere outside input fields.
+      child: Scaffold(//main screen structure.
+        resizeToAvoidBottomInset: false,//prevents screen from resizing when keyboard shows.
+        body: Container(//holds  actual content.
+          decoration: const BoxDecoration(//Property of a Container how the container should look
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                Color.fromRGBO(194, 227, 207, 1),
-                Color.fromRGBO(140, 238, 173, 0.9),
+               Color.fromRGBO(194, 227, 207, 1),
+               Color.fromRGBO(140, 238, 173, 0.9),
               ],
             ),
           ),
-          child: Stack(
+          child: Stack(//child and children property but stack is widget
             children: [
               Center(
                 child: Opacity(
                   opacity: 0.2,
                   child: Image.asset(
                     'assets/lu.png',
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.8,//full screen width. multiply .8
                     height: 280,
                     fit: BoxFit.contain,
                   ),
                 ),
               ),
-              SingleChildScrollView(
+              SingleChildScrollView(//A widget that allows its child to scroll
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),//a constant padding object with 30px on the left and right.
                   child: Form(
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 50),//creating box
                         Image.asset('assets/lu.png', height: 90, width: 95),
                         const SizedBox(height: 10),
 
@@ -112,7 +113,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         // Password
                         TextFormField(
                           controller: _passwordController,
-                          obscureText: true,
+                          obscureText: true, // Set to true to hide password input
                           decoration: _inputDecoration('Enter Password'),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -125,7 +126,28 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                         ),
                         const SizedBox(height: 20),
-
+                        Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgetPasswordScreen()),
+                            );
+                          },
+                          child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Color.fromRGBO(86, 82, 82, 0.7),
+                              fontFamily: 'inter',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
                         const SizedBox(height: 23),
 
                         // Sign In Button
